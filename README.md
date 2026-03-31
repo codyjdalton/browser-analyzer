@@ -1,6 +1,8 @@
 # Browser History Analyzer
 
-A Linux and Windows desktop application for parsing, analyzing, and exporting web browser history, search queries, and bookmarks from Chromium-based browsers. Built with Electron and Node.js. Distributed as a portable AppImage (Linux) or portable EXE (Windows) — no installation required. Inspired by BrowserHistoryView, the utility by Nirsoft which is Windows only. I started with feature parity and added a few useful additions such as viewing search history and highlighting suspicious urls. Like BrowserHistoryView, the full list of urls can be exported to CSV for deeper analysis.
+A Linux and Windows desktop application for parsing, analyzing, and exporting web browser history, search queries, and bookmarks from Brave, Chrome, Chromium, Edge, Opera, and Firefox. Can be used on the target machine or an imported `History` or `Bookmarks`, etc. file. 
+
+Built with Electron and Node.js. Distributed as a portable AppImage (Linux) or portable EXE (Windows) — no installation required. Inspired by BrowserHistoryView, the utility by Nirsoft which is Windows only. I started with feature parity and added a few useful additions such as viewing search history, highlighting suspicious urls, and a user-friendly UI. Like BrowserHistoryView, the full list of urls can be exported to CSV for deeper analysis.
 
 > **Disclaimer:** This tool is intended for forensic, investigative, or educational purposes only. Use responsibly and in accordance with applicable laws and policies.
 
@@ -10,7 +12,8 @@ A Linux and Windows desktop application for parsing, analyzing, and exporting we
 
 ## Features
 
-- **Multi-browser support** — Brave, Google Chrome, Chromium, Microsoft Edge, and Opera with automatic profile discovery
+- **Multi-browser support** — Brave, Chrome, Chromium, Edge, Opera, and Firefox with automatic profile discovery
+- **File upload mode** — Load History or Bookmarks files directly from disk for analysis (useful for examining files from another machine or forensic image)
 - **Three analysis views** — URLs (full history), Searches (extracted search queries), and Bookmarks
 - **Suspicious activity detection** — Flags URLs/titles matching profanity, data exfiltration tools, hacking resources, anonymization services, insider threat indicators, and 90+ forensic keywords
 - **Search extraction** — Pulls search terms from the browser's `keyword_search_terms` database table and detects searches from URL patterns (Google, Bing, DuckDuckGo, Yahoo, Brave Search, YouTube, Amazon, Reddit, Baidu, Yandex)
@@ -34,6 +37,8 @@ The app automatically scans for browser profiles in these locations:
 | Chrome    | `~/.config/google-chrome/`                          | `~/.var/app/com.google.Chrome/config/google-chrome/`                 | `~/snap/google-chrome/current/.config/google-chrome/`             |
 | Chromium  | `~/.config/chromium/`                               | `~/.var/app/org.chromium.Chromium/config/chromium/`                  | `~/snap/chromium/current/.config/chromium/`                       |
 | Edge      | `~/.config/microsoft-edge/`                         | `~/.var/app/com.microsoft.Edge/config/microsoft-edge/`               | `~/snap/microsoft-edge/current/.config/microsoft-edge/`           |
+| Opera     | `~/.config/opera/`                                  | `~/.var/app/com.opera.Opera/config/opera/`                           | `~/snap/opera/current/.config/opera/`                             |
+| Firefox   | `~/.mozilla/firefox/`                               | `~/.var/app/org.mozilla.firefox/.mozilla/firefox/`                   | `~/snap/firefox/common/.mozilla/firefox/`                         |
 
 #### Windows
 
@@ -44,6 +49,7 @@ The app automatically scans for browser profiles in these locations:
 | Chromium  | `%LOCALAPPDATA%\Chromium\User Data`                                  |
 | Edge      | `%LOCALAPPDATA%\Microsoft\Edge\User Data`                            |
 | Opera     | `%APPDATA%\Opera Software\Opera Stable`                              |
+| Firefox   | `%APPDATA%\Mozilla\Firefox\Profiles`                                 |
 
 All profile directories (Default, Profile 1, Profile 2, etc.) are detected automatically.
 
@@ -99,8 +105,10 @@ This fetches the Windows `better-sqlite3` native binary, then builds a portable 
 ### Using the Application
 
 1. **Select a time range** — defaults to the past year, or check "From the beginning of time"
-2. **Select browser profiles** — all detected profiles are shown, with a "Select All" option
-3. **Click "Load History"** — loads URLs, searches, and bookmarks from all selected profiles
+2. **Choose a data source**:
+   - **Local Browsers** — automatically discovers installed browser profiles on the current machine
+   - **Upload Files** — manually select History and/or Bookmarks files from disk (e.g. files copied from another computer or a forensic image). Pick a browser type, then use the file pickers to load a History database (`History` for Chromium-based, `places.sqlite` for Firefox) and optionally a Bookmarks JSON file.
+3. **Click "Load History"** — loads URLs, searches, and bookmarks from all selected profiles or uploaded files
 4. **Browse tabs**:
    - **URLs** — Full browsing history with visit counts, durations, referrers, and transition types
    - **Searches** — Extracted search queries with the search engine identified
