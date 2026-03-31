@@ -1,6 +1,6 @@
 # Browser History Analyzer
 
-A Linux and Windows desktop application for parsing, analyzing, and exporting web browser history, search queries, and bookmarks from Chromium-based browsers. Built with Electron and Node.js. Distributed as a portable AppImage (Linux) or portable EXE (Windows) — no installation required. Inspired by BrowserHistoryView the utility by Nirsoft.
+A Linux and Windows desktop application for parsing, analyzing, and exporting web browser history, search queries, and bookmarks from Chromium-based browsers. Built with Electron and Node.js. Distributed as a portable AppImage (Linux) or portable EXE (Windows) — no installation required. Inspired by BrowserHistoryView, the utility by Nirsoft which is Windows only. I started with feature parity and added a few useful additions such as viewing search history and highlighting suspicious urls. Like BrowserHistoryView, the full list of urls can be exported to CSV for deeper analysis.
 
 > **Disclaimer:** This tool is intended for forensic, investigative, or educational purposes only. Use responsibly and in accordance with applicable laws and policies.
 
