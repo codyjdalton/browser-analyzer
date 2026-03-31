@@ -1,6 +1,6 @@
 # Browser History Analyzer
 
-A Linux and Windows desktop application for parsing, analyzing, and exporting web browser history, search queries, and bookmarks from Brave, Chrome, Chromium, Edge, Opera, and Firefox. Can be used on the target machine or an imported `History` or `Bookmarks`, etc. file. 
+A Linux and Windows desktop application for importing, parsing, analyzing, and exporting web browser history, search queries, and bookmarks from Brave, Chrome, Chromium, Edge, Opera, and Firefox. Can be used on the target machine or an imported `History` or `Bookmarks`, etc. file. 
 
 Built with Electron and Node.js. Distributed as a portable AppImage (Linux) or portable EXE (Windows) — no installation required. Inspired by BrowserHistoryView, the utility by Nirsoft which is Windows only. I started with feature parity and added a few useful additions such as viewing search history, highlighting suspicious urls, and a user-friendly UI. Like BrowserHistoryView, the full list of urls can be exported to CSV for deeper analysis.
 

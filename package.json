@@ -43,7 +43,12 @@
       "preload.js",
       "src/**/*",
       "renderer/**/*",
-      "AppIcon.png"
+      "AppIcon.png",
+      "node_modules/bad-words/**",
+      "node_modules/badwords-list/**",
+      "node_modules/better-sqlite3/**",
+      "node_modules/bindings/**",
+      "node_modules/file-uri-to-path/**"
     ],
     "asarUnpack": [
       "node_modules/better-sqlite3/**"
