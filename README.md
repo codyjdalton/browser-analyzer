@@ -2,6 +2,8 @@
 
 A Linux and Windows desktop application for parsing, analyzing, and exporting web browser history, search queries, and bookmarks from Chromium-based browsers. Built with Electron and Node.js. Distributed as a portable AppImage (Linux) or portable EXE (Windows) — no installation required. Inspired by BrowserHistoryView the utility by Nirsoft.
 
+> **Disclaimer:** This tool is intended for forensic, investigative, or educational purposes only. Use responsibly and in accordance with applicable laws and policies.
+
 ![Searches tab](tool-screenshot1.png)
 
 ![URLs tab](tool-screenshot2.png)
