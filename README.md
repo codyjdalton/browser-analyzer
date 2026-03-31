@@ -55,7 +55,7 @@ All profile directories (Default, Profile 1, Profile 2, etc.) are detected autom
 
 ## Download
 
-The easiest way to get the application is to download a pre-built release:
+Download the latest release from the [releases page](https://github.com/codyjdalton/browser-analyzer/releases/):
 
 - **Windows** — download the `.exe` portable executable
 - **Linux** — download the `.AppImage` portable executable
