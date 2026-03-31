@@ -1,0 +1,8 @@
+node_modules/
+dist/
+build/
+*.AppImage
+*.db
+*.db-wal
+*.db-shm
+.claude
