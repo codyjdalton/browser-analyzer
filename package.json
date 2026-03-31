@@ -1,0 +1,52 @@
+{
+  "name": "browser-history-analyzer",
+  "version": "1.0.0",
+  "description": "Desktop app to parse and export web browser history",
+  "main": "main.js",
+  "scripts": {
+    "start": "env -u ELECTRON_RUN_AS_NODE -u ELECTRON_NO_ATTACH_CONSOLE electron . ; electron-builder --linux AppImage",
+    "rebuild": "electron-rebuild",
+    "dist": "electron-builder --linux AppImage",
+    "dist:win": "node scripts/fetch-win-native.js && electron-builder --win",
+    "dist:all": "electron-builder --linux AppImage --win"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bad-words": "^4.0.0",
+    "better-sqlite3": "^11.7.0"
+  },
+  "devDependencies": {
+    "electron": "^33.3.1",
+    "electron-builder": "^25.1.8",
+    "electron-rebuild": "^3.2.9"
+  },
+  "build": {
+    "appId": "com.browser-analysis.app",
+    "productName": "Browser History Analyzer",
+    "linux": {
+      "target": "AppImage",
+      "category": "Utility",
+      "icon": "build/icons",
+      "desktop": {
+        "StartupWMClass": "browser-history-analyzer"
+      }
+    },
+    "win": {
+      "target": "portable",
+      "icon": "build/icons/icon.ico"
+    },
+    "npmRebuild": true,
+    "afterPack": "scripts/after-pack-win.js",
+    "files": [
+      "main.js",
+      "preload.js",
+      "src/**/*",
+      "renderer/**/*",
+      "AppIcon.png"
+    ],
+    "asarUnpack": [
+      "node_modules/better-sqlite3/**"
+    ]
+  }
+}

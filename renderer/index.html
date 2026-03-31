@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browser History Analyzer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <header>
+      <div class="header-left">
+        <div class="logo-mark">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <rect x="2" y="2" width="9" height="9" rx="1.5" fill="#c0cde0"/>
+            <rect x="13" y="2" width="9" height="9" rx="1.5" fill="#8aa4c8"/>
+            <rect x="2" y="13" width="9" height="9" rx="1.5" fill="#8aa4c8"/>
+            <rect x="13" y="13" width="9" height="9" rx="1.5" fill="#c0cde0"/>
+          </svg>
+        </div>
+        <div>
+          <h1>Browser History Analyzer</h1>
+          <span class="version">v1.0.0 &mdash; Linux</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="status-indicator" id="statusIndicator">
+          <span class="status-dot"></span>
+          <span id="statusText">Ready</span>
+        </span>
+      </div>
+    </header>
+
+    <main>
+      <section class="controls-panel">
+        <div class="panel-header">
+          <span class="panel-label">Query Parameters</span>
+        </div>
+        <div class="controls-grid">
+          <div class="control-group">
+            <label>Time Range</label>
+            <div class="date-inputs">
+              <div class="input-wrapper">
+                <span class="input-label">FROM</span>
+                <input type="date" id="startDate">
+              </div>
+              <span class="date-separator">&rarr;</span>
+              <div class="input-wrapper">
+                <span class="input-label">TO</span>
+                <input type="date" id="endDate">
+              </div>
+            </div>
+            <label class="checkbox-label" id="allTimeLabel">
+              <input type="checkbox" id="allTime">
+              <span class="checkbox-custom"></span>
+              From the beginning of time
+            </label>
+          </div>
+
+          <div class="control-group">
+            <label>Browsers &amp; Profiles</label>
+            <div class="profiles-container" id="profilesContainer">
+              <div class="profiles-loading">Scanning for browsers...</div>
+            </div>
+          </div>
+
+          <div class="control-group control-actions">
+            <button class="btn-primary" id="loadBtn">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M8 2v12M2 8l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Load History
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="results-panel" id="resultsPanel" style="display:none;">
+        <div class="panel-header">
+          <div class="panel-header-row">
+            <div class="tab-bar">
+              <button class="tab-btn active" data-tab="urls">URLs</button>
+              <button class="tab-btn" data-tab="searches">Searches</button>
+              <button class="tab-btn" data-tab="bookmarks">Bookmarks</button>
+            </div>
+            <div class="results-meta">
+              <span class="record-count" id="recordCount"></span>
+              <button class="btn-export" id="exportBtn">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M7 1v8M3 6l4 4 4-4M1 11v2h12v-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Export CSV
+              </button>
+            </div>
+          </div>
+          <div class="panel-header-row">
+            <div class="filter-toggles" id="filterToggles">
+              <label class="filter-toggle">
+                <input type="checkbox" id="suspiciousFilter">
+                <span class="filter-toggle-indicator filter-indicator-amber"></span>
+                <span class="filter-toggle-label">Suspicious Activity</span>
+              </label>
+              <label class="filter-toggle">
+                <input type="checkbox" id="dedupFilter">
+                <span class="filter-toggle-indicator filter-indicator-amber"></span>
+                <span class="filter-toggle-label">Filter Duplicates</span>
+              </label>
+              <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search URL or title...">
+              </div>
+            </div>
+            <div class="tab-search" id="searchesSearch" style="display:none;">
+              <label class="filter-toggle">
+                <input type="checkbox" id="searchesDedupFilter">
+                <span class="filter-toggle-indicator filter-indicator-amber"></span>
+                <span class="filter-toggle-label">Filter Duplicates</span>
+              </label>
+              <div class="search-box">
+                <input type="text" id="searchesSearchInput" placeholder="Search terms...">
+              </div>
+            </div>
+            <div class="tab-search" id="bookmarksSearch" style="display:none;">
+              <div class="search-box">
+                <input type="text" id="bookmarksSearchInput" placeholder="Search bookmarks...">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-content active" id="urlsContainer">
+          <table id="urlsTable">
+            <thead id="urlsHead"></thead>
+            <tbody id="urlsBody"></tbody>
+          </table>
+        </div>
+
+        <div class="tab-content" id="searchesContainer" style="display:none;">
+          <table id="searchesTable">
+            <thead id="searchesHead"></thead>
+            <tbody id="searchesBody"></tbody>
+          </table>
+        </div>
+
+        <div class="tab-content" id="bookmarksContainer" style="display:none;">
+          <table id="bookmarksTable">
+            <thead id="bookmarksHead"></thead>
+            <tbody id="bookmarksBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <div class="loading-overlay" id="loadingOverlay" style="display:none;">
+        <div class="spinner"></div>
+        <span>Parsing history database...</span>
+      </div>
+    </main>
+    <div class="source-modal-overlay" id="sourceModal" style="display:none;">
+      <div class="source-modal">
+        <div class="source-modal-header">
+          <span class="source-modal-title">Select Data Source</span>
+          <button class="source-modal-close" id="sourceModalClose">&times;</button>
+        </div>
+        <div class="source-modal-body">
+          <label class="source-option selected" data-source="local">
+            <input type="radio" name="loadSource" value="local" checked>
+            <div class="source-option-radio"></div>
+            <div class="source-option-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2"/>
+                <line x1="8" y1="21" x2="16" y2="21"/>
+                <line x1="12" y1="17" x2="12" y2="21"/>
+              </svg>
+            </div>
+            <div class="source-option-text">
+              <span class="source-option-label">This Computer</span>
+              <span class="source-option-desc">Scan local browser profiles for history, searches, and bookmarks</span>
+            </div>
+          </label>
+          <label class="source-option" data-source="upload">
+            <input type="radio" name="loadSource" value="upload">
+            <div class="source-option-radio"></div>
+            <div class="source-option-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="17 8 12 3 7 8"/>
+                <line x1="12" y1="3" x2="12" y2="15"/>
+              </svg>
+            </div>
+            <div class="source-option-text">
+              <span class="source-option-label">Upload File</span>
+              <span class="source-option-desc">Import a History or Bookmarks file from any Chromium browser</span>
+            </div>
+          </label>
+          <div class="upload-config" id="uploadConfig" style="display:none;">
+            <div class="upload-slots" id="uploadSlots"></div>
+          </div>
+        </div>
+        <div class="source-modal-footer">
+          <button class="source-modal-cancel" id="sourceModalCancel">Cancel</button>
+          <button class="btn-primary" id="sourceModalConfirm">Continue</button>
+        </div>
+      </div>
+    </div>
+
+    <footer class="analysis-bar" id="analysisBar" style="display:none;">
+      <div class="analysis-bar-content">
+        <span class="analysis-label" id="analysisLabel">Analyzing content...</span>
+        <div class="analysis-progress">
+          <div class="analysis-progress-fill" id="analysisProgressFill"></div>
+        </div>
+      </div>
+    </footer>
+  </div>
+  <script src="renderer.js"></script>
+</body>
+</html>
